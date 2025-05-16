@@ -9,7 +9,7 @@ use PhpParser\Node\Stmt\Trait_;
 use ReflectionClass;
 use voku\SimplePhpParser\Parsers\Helper\Utils;
 
-final class PHPTrait extends BasePHPClass
+class PHPTrait extends BasePHPClass
 {
     /**
      * @phpstan-var class-string

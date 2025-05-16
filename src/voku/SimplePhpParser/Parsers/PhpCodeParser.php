@@ -23,7 +23,7 @@ use voku\SimplePhpParser\Parsers\Visitors\ParentConnector;
 use function React\Async\await;
 use function React\Promise\all;
 
-final class PhpCodeParser
+class PhpCodeParser
 {
     /**
      * @internal
