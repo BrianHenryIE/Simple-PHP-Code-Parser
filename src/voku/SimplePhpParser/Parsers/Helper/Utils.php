@@ -495,6 +495,23 @@ final class Utils
             }
         }
 
+        /**
+         * macOS (FreeBSD)
+         */
+        $ret = @\shell_exec('sysctl -n hw.ncpu');
+        if (\is_string($ret)) {
+            $ret = \trim($ret);
+            /** @noinspection PhpAssignmentInConditionInspection */
+            if ($ret && ($tmp = \filter_var($ret, \FILTER_VALIDATE_INT)) !== false) {
+                $return = (int)round($tmp / 2);
+                if ($return > 1) {
+                    return $return;
+                }
+
+                return 1;
+            }
+        }
+
         return 1;
     }
 
