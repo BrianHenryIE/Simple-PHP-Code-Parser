@@ -38,5 +38,16 @@
         "psr-4": {
             "voku\\tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test-coverage": [
+            "Composer\\Config::disableProcessTimeout",
+            "if [ \"$XDEBUG_MODE\" != \"coverage\" ]; then echo \"Run with 'XDEBUG_MODE=coverage composer test-coverage'\"; exit 1; fi;",
+            "phpunit --coverage-text --coverage-clover .phpunit.result/unitclover.xml --coverage-php .phpunit.result/unitphp.cov --coverage-html .phpunit.result/html -d memory_limit=-1 --order-by=random",
+            "# Run 'open ./.phpunit.result/html/index.html' to view report."
+        ]
+    },
+    "scripts-descriptions": {
+        "test-coverage": "Run PHPUnit tests with coverage. Use 'XDEBUG_MODE=coverage composer test-coverage' to run, 'open ./.phpunit.result/html/index.html' to view."
     }
 }
