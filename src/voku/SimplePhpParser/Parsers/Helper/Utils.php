@@ -468,7 +468,7 @@ final class Utils
         }
 
         /** @noinspection PhpUsageOfSilenceOperatorInspection */
-        $ret = @\shell_exec('nproc');
+        $ret = @\shell_exec('nproc 2>&1');
         if (\is_string($ret)) {
             $ret = \trim($ret);
             /** @noinspection PhpAssignmentInConditionInspection */
