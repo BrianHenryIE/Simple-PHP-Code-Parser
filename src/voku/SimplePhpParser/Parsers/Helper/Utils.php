@@ -112,7 +112,9 @@ final class Utils
                     &&
                     $node->value->name
                 ) {
-                    $value = implode('\\', $node->value->name->getParts()) ?: $node->value->name->name;
+                    $value = method_exists($node->value->name,'getParts')
+                        ? implode('\\', $node->value->name->getParts())
+                        : $node->value->name->name;
                     return $value === 'null' ? null : $value;
                 }
             }
