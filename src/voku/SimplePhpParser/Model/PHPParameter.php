@@ -9,6 +9,7 @@ use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Param;
 use ReflectionParameter;
 use voku\SimplePhpParser\Parsers\Helper\Utils;
+use voku\SimplePhpParser\Parsers\PhpCodeParser;
 
 class PHPParameter extends BasePHPElement
 {
@@ -151,7 +152,7 @@ class PHPParameter extends BasePHPElement
             } else {
                 $this->type = Utils::normalizePhpType($type . '', true);
             }
-            if ($this->type && \class_exists($this->type, true)) {
+            if ($this->type && \class_exists($this->type, PhpCodeParser::$classExistsAutoload)) {
                 $this->type = '\\' . \ltrim($this->type, '\\');
             }
 

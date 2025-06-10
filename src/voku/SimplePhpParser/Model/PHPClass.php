@@ -8,6 +8,7 @@ use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\Class_;
 use ReflectionClass;
 use voku\SimplePhpParser\Parsers\Helper\Utils;
+use voku\SimplePhpParser\Parsers\PhpCodeParser;
 
 class PHPClass extends BasePHPClass
 {
@@ -52,7 +53,7 @@ class PHPClass extends BasePHPClass
 
         $classExists = false;
         try {
-            if (\class_exists($this->name, true)) {
+            if (\class_exists($this->name, PhpCodeParser::$classExistsAutoload)) {
                 $classExists = true;
             }
         } catch (\Exception $e) {
@@ -165,7 +166,7 @@ class PHPClass extends BasePHPClass
                 if (
                     !$this->parserContainer->getClass($this->parentClass)
                     &&
-                    \class_exists($this->parentClass, true)
+                    \class_exists($this->parentClass, PhpCodeParser::$classExistsAutoload)
                 ) {
                     $classExists = true;
                 }

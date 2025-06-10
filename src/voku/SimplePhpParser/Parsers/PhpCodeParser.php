@@ -31,6 +31,16 @@ final class PhpCodeParser
     private const CACHE_KEY_HELPER = 'simple-php-code-parser-v4-';
 
     /**
+     * Autoloading during `class_exists()` is fine when you're parsing code for the existing project, but when
+     * parsing php text for a different project, it can lead to unexpected behavior. E.g. the text contains a class
+     * that _can_ be autoloaded because it shares a name with a class in the current project, but version of the class
+     * is different.
+     *
+     * @see class_exists()
+     */
+    public static bool $classExistsAutoload = true;
+
+    /**
      * @param string   $code
      * @param string[] $autoloaderProjectPaths
      *
@@ -387,7 +397,7 @@ final class PhpCodeParser
             if (
                 !isset($classes[$class->parentClass])
                 &&
-                \class_exists($class->parentClass, true)
+                \class_exists($class->parentClass, PhpCodeParser::$classExistsAutoload)
             ) {
                 $reflectionClassTmp = Utils::createClassReflectionInstance($class->parentClass);
                 $classTmp = (new \voku\SimplePhpParser\Model\PHPClass($parserContainer))->readObjectFromReflection($reflectionClassTmp);
