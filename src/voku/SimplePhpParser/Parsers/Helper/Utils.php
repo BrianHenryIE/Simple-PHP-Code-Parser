@@ -9,6 +9,7 @@ use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
 use ReflectionFunction;
+use voku\SimplePhpParser\Parsers\PhpCodeParser;
 
 final class Utils
 {
@@ -156,7 +157,7 @@ final class Utils
                 return $className;
             }
 
-            if (\class_exists($className, true)) {
+            if (\class_exists($className, PhpCodeParser::$classExistsAutoload)) {
                 return \constant($className . '::' . $node->name->name);
             }
         }
