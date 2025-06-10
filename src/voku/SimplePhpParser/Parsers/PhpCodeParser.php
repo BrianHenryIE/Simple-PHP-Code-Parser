@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace voku\SimplePhpParser\Parsers;
 
 use FilesystemIterator;
-use PhpParser\Lexer\Emulative;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\ParserFactory;
@@ -210,20 +209,7 @@ class PhpCodeParser
         ParserContainer $parserContainer,
         ASTVisitor $visitor
     ) {
-        $parser = (new ParserFactory())->create(
-            ParserFactory::PREFER_PHP7,
-            new Emulative(
-                [
-                    'usedAttributes' => [
-                        'comments',
-                        'startLine',
-                        'endLine',
-                        'startTokenPos',
-                        'endTokenPos',
-                    ],
-                ]
-            )
-        );
+        $parser = (new ParserFactory())->createForNewestSupportedVersion();
 
         $errorHandler = new ParserErrorHandler();
 
