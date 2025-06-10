@@ -11,7 +11,7 @@ use ReflectionClass;
 use ReflectionFunction;
 use voku\SimplePhpParser\Parsers\PhpCodeParser;
 
-final class Utils
+class Utils
 {
     public const GET_PHP_PARSER_VALUE_FROM_NODE_HELPER = '!!!_SIMPLE_PHP_CODE_PARSER_HELPER_!!!';
 
