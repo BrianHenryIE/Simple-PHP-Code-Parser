@@ -220,7 +220,7 @@ class PHPParameter extends BasePHPElement
         }
 
         try {
-            $phpDoc = Utils::createDocBlockInstance()->create($docComment);
+            $phpDoc = DocBlockFactory::createInstance()->create($docComment);
 
             $parsedParamTags = $phpDoc->getTagsByName('param');
 
