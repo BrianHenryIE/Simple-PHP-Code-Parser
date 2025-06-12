@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace voku\SimplePhpParser\Model;
 
+use phpDocumentor\Reflection\DocBlockFactory;
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\Property;
 use ReflectionProperty;
