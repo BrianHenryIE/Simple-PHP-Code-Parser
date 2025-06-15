@@ -8,6 +8,8 @@
 
 # ❤ Simple PHP Code Parser
 
+### Forked from [voku/Simple-PHP-Code-Parser](https://github.com/voku/Simple-PHP-Code-Parser)
+
 You can simply scan a string, a file or a full directory and you can see a simple data structure from your php code.
 - Classes (**PHPClass**)
 - Properties (**PHPProperties**)
