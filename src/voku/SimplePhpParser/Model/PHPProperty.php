@@ -230,7 +230,7 @@ class PHPProperty extends BasePHPElement
         }
 
         try {
-            $phpDoc = DocBlockFactory::createInstance()->create($docComment);
+            $phpDoc = DocFactoryProvider::getDocFactory()->create($docComment);
 
             $parsedParamTags = $phpDoc->getTagsByName('var');
 

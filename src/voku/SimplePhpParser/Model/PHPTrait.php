@@ -293,7 +293,7 @@ final class PHPTrait extends BasePHPClass
         }
 
         try {
-            $phpDoc = DocBlockFactory::createInstance()->create($docComment);
+            $phpDoc = DocFactoryProvider::getDocFactory()->create($docComment);
 
             $parsedPropertyTags = $phpDoc->getTagsByName('property')
                                + $phpDoc->getTagsByName('property-read')
