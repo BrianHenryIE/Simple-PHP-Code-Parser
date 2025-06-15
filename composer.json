@@ -1,5 +1,5 @@
 {
-    "name": "voku/simple-php-code-parser",
+    "name": "brianhenryie/simple-php-code-parser",
     "description": "Get a simple data structure from your php code.",
     "type": "library",
     "keywords": [
