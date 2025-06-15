@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Parsers\Visitors;
+namespace BrianHenryIE\SimplePhpParser\Parsers\Visitors;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;

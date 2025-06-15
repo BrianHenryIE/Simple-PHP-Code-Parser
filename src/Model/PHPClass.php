@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Model;
+namespace BrianHenryIE\SimplePhpParser\Model;
 
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\Class_;
 use ReflectionClass;
-use voku\SimplePhpParser\Parsers\Helper\Utils;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
 
 class PHPClass extends BasePHPClass
 {

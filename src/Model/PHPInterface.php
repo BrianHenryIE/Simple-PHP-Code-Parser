@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Model;
+namespace BrianHenryIE\SimplePhpParser\Model;
 
 use PhpParser\Node\Stmt\Interface_;
 use ReflectionClass;
-use voku\SimplePhpParser\Parsers\Helper\Utils;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
 
 class PHPInterface extends BasePHPClass
 {

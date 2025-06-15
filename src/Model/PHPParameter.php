@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Model;
+namespace BrianHenryIE\SimplePhpParser\Model;
 
 use PhpParser\Comment\Doc;
 use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Param;
 use ReflectionParameter;
-use voku\SimplePhpParser\Parsers\Helper\Utils;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
 
 class PHPParameter extends BasePHPElement
 {

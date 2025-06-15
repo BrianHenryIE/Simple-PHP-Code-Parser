@@ -7,7 +7,7 @@ namespace {
     \define('LALL', 'foo');
 }
 
-namespace voku\tests {
+namespace BrianHenryIE\SimplePhpParser {
     use const SORT_ASC as SORT_ASC_TEST;
 
     function foo3(int $foo = 0)
@@ -118,7 +118,7 @@ namespace voku\tests {
         }
 
         /**
-         * @return \voku\tests\Dummy3
+         * @return \BrianHenryIE\SimplePhpParser\Dummy3
          */
         public function lall4(): DummyInterface
         {
@@ -128,7 +128,7 @@ namespace voku\tests {
         /**
          * @param int $case
          *
-         * @return \voku\tests\Dummy3
+         * @return \BrianHenryIE\SimplePhpParser\Dummy3
          */
         public function lall5(int $case = \CASE_LOWER): DummyInterface
         {
@@ -138,7 +138,7 @@ namespace voku\tests {
         /**
          * @param int $case
          *
-         * @return \voku\tests\Dummy3
+         * @return \BrianHenryIE\SimplePhpParser\Dummy3
          */
         public function lall6(int $case = self::CASE_LOWER): DummyInterface
         {
@@ -148,7 +148,7 @@ namespace voku\tests {
         /**
          * @param int $case
          *
-         * @return \voku\tests\Dummy3
+         * @return \BrianHenryIE\SimplePhpParser\Dummy3
          */
         public function lall7(int $case = self::CASE_SPECIAL): DummyInterface
         {
@@ -158,7 +158,7 @@ namespace voku\tests {
         /**
          * @param int $case
          *
-         * @return \voku\tests\Dummy3
+         * @return \BrianHenryIE\SimplePhpParser\Dummy3
          */
         public function lall8(int $case = self::CASE_NULL): DummyInterface
         {
@@ -168,7 +168,7 @@ namespace voku\tests {
         /**
          * @param null|int $case
          *
-         * @return \voku\tests\Dummy3
+         * @return \BrianHenryIE\SimplePhpParser\Dummy3
          */
         public function lall9(int $case = self::CASE_NULL): DummyInterface
         {
@@ -178,7 +178,7 @@ namespace voku\tests {
         /**
          * @param int $case
          *
-         * @return \voku\tests\Dummy3
+         * @return \BrianHenryIE\SimplePhpParser\Dummy3
          */
         public function lall10(int $case = SORT_ASC_TEST): DummyInterface
         {
@@ -188,7 +188,7 @@ namespace voku\tests {
         /**
          * @param int $case
          *
-         * @return \voku\tests\Dummy3
+         * @return \BrianHenryIE\SimplePhpParser\Dummy3
          */
         public function lall11(int $case = SORT_ASC_TEST_2): DummyInterface
         {
@@ -285,7 +285,7 @@ namespace voku\tests {
 
 
         /**
-         * @return array<int, class-string<\voku\tests\Dummy|\voku\tests\Dummy4>>
+         * @return array<int, class-string<\BrianHenryIE\SimplePhpParser\Dummy|\BrianHenryIE\SimplePhpParser\Dummy4>>
          */
         public static function withClassStringArrayWithCorrectNamespace(): array
         {

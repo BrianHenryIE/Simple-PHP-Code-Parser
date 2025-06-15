@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Model;
+namespace BrianHenryIE\SimplePhpParser\Model;
 
-use voku\SimplePhpParser\Parsers\Helper\DocFactoryProvider;
-use voku\SimplePhpParser\Parsers\Helper\Utils;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\DocFactoryProvider;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
 
 class PHPMethod extends PHPFunction
 {

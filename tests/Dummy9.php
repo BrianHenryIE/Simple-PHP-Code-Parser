@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace voku\tests;
+namespace BrianHenryIE\SimplePhpParser;
 
-use voku\tests\Dummy6 as DummyFoo;
+use BrianHenryIE\SimplePhpParser\Dummy6 as DummyFoo;
 
 /**
  * @internal

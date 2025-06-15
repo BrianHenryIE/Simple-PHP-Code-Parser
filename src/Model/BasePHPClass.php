@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Model;
+namespace BrianHenryIE\SimplePhpParser\Model;
 
 abstract class BasePHPClass extends BasePHPElement
 {

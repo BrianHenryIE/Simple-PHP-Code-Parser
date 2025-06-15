@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Parsers\Helper;
+namespace BrianHenryIE\SimplePhpParser\Parsers\Helper;
 
 use PhpParser\Node\Expr\UnaryMinus;
 use RecursiveArrayIterator;
@@ -65,7 +65,7 @@ final class Utils
     /**
      * @param \PhpParser\Node\Arg|\PhpParser\Node\Const_|\PhpParser\Node\Expr $node
      * @param string|null                                                     $classStr
-     * @param \voku\SimplePhpParser\Parsers\Helper\ParserContainer|null       $parserContainer
+     * @param \BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer|null       $parserContainer
      *
      * @phpstan-param class-string|null                                         $classStr
      *

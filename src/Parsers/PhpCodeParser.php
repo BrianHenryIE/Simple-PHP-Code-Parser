@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Parsers;
+namespace BrianHenryIE\SimplePhpParser\Parsers;
 
 use FilesystemIterator;
 use PhpParser\Lexer\Emulative;
@@ -14,12 +14,12 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
 use voku\cache\Cache;
-use voku\SimplePhpParser\Model\PHPInterface;
-use voku\SimplePhpParser\Parsers\Helper\ParserContainer;
-use voku\SimplePhpParser\Parsers\Helper\ParserErrorHandler;
-use voku\SimplePhpParser\Parsers\Helper\Utils;
-use voku\SimplePhpParser\Parsers\Visitors\ASTVisitor;
-use voku\SimplePhpParser\Parsers\Visitors\ParentConnector;
+use BrianHenryIE\SimplePhpParser\Model\PHPInterface;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserErrorHandler;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
+use BrianHenryIE\SimplePhpParser\Parsers\Visitors\ASTVisitor;
+use BrianHenryIE\SimplePhpParser\Parsers\Visitors\ParentConnector;
 use function React\Async\await;
 use function React\Promise\all;
 
@@ -34,7 +34,7 @@ final class PhpCodeParser
      * @param string   $code
      * @param string[] $autoloaderProjectPaths
      *
-     * @return \voku\SimplePhpParser\Parsers\Helper\ParserContainer
+     * @return \BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer
      */
     public static function getFromString(
         string $code,
@@ -52,7 +52,7 @@ final class PhpCodeParser
      *
      * @phpstan-param class-string $className
      *
-     * @return \voku\SimplePhpParser\Parsers\Helper\ParserContainer
+     * @return \BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer
      */
     public static function getFromClassName(
         string $className,
@@ -72,7 +72,7 @@ final class PhpCodeParser
      * @param string[] $pathExcludeRegex
      * @param string[] $fileExtensions
      *
-     * @return \voku\SimplePhpParser\Parsers\Helper\ParserContainer
+     * @return \BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer
      */
     public static function getPhpFiles(
         string $pathOrCode,
@@ -189,10 +189,10 @@ final class PhpCodeParser
     /**
      * @param string                                               $phpCode
      * @param string|null                                          $fileName
-     * @param \voku\SimplePhpParser\Parsers\Helper\ParserContainer $parserContainer
-     * @param \voku\SimplePhpParser\Parsers\Visitors\ASTVisitor    $visitor
+     * @param \BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer $parserContainer
+     * @param \BrianHenryIE\SimplePhpParser\Parsers\Visitors\ASTVisitor    $visitor
      *
-     * @return \voku\SimplePhpParser\Parsers\Helper\ParserContainer|\voku\SimplePhpParser\Parsers\Helper\ParserErrorHandler
+     * @return \BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer|\BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserErrorHandler
      */
     public static function process(
         string $phpCode,
@@ -364,13 +364,13 @@ final class PhpCodeParser
     }
 
     /**
-     * @param \voku\SimplePhpParser\Model\PHPClass   $class
-     * @param \voku\SimplePhpParser\Model\PHPClass[] $classes
+     * @param \BrianHenryIE\SimplePhpParser\Model\PHPClass   $class
+     * @param \BrianHenryIE\SimplePhpParser\Model\PHPClass[] $classes
      * @param PHPInterface[]                         $interfaces
      * @param ParserContainer                        $parserContainer
      */
     private static function mergeInheritdocData(
-        \voku\SimplePhpParser\Model\PHPClass $class,
+        \BrianHenryIE\SimplePhpParser\Model\PHPClass $class,
         array $classes,
         array $interfaces,
         ParserContainer $parserContainer
@@ -390,7 +390,7 @@ final class PhpCodeParser
                 \class_exists($class->parentClass, true)
             ) {
                 $reflectionClassTmp = Utils::createClassReflectionInstance($class->parentClass);
-                $classTmp = (new \voku\SimplePhpParser\Model\PHPClass($parserContainer))->readObjectFromReflection($reflectionClassTmp);
+                $classTmp = (new \BrianHenryIE\SimplePhpParser\Model\PHPClass($parserContainer))->readObjectFromReflection($reflectionClassTmp);
                 if ($classTmp->name) {
                     $classes[$classTmp->name] = $classTmp;
                 }
@@ -464,7 +464,7 @@ final class PhpCodeParser
                         foreach ($value as &$parameter) {
                             ++$parameterCounter;
 
-                            \assert($parameter instanceof \voku\SimplePhpParser\Model\PHPParameter);
+                            \assert($parameter instanceof \BrianHenryIE\SimplePhpParser\Model\PHPParameter);
 
                             $interfaceMethodParameter = null;
                             $parameterCounterInterface = 0;
@@ -525,7 +525,7 @@ final class PhpCodeParser
                     foreach ($value as &$parameter) {
                         ++$parameterCounter;
 
-                        \assert($parameter instanceof \voku\SimplePhpParser\Model\PHPParameter);
+                        \assert($parameter instanceof \BrianHenryIE\SimplePhpParser\Model\PHPParameter);
 
                         $parentMethodParameter = null;
                         $parameterCounterParent = 0;

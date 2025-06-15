@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Model;
+namespace BrianHenryIE\SimplePhpParser\Model;
 
 use PhpParser\Node;
-use voku\SimplePhpParser\Parsers\Helper\DocFactoryProvider;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\DocFactoryProvider;
 
 trait PHPDocElement
 {

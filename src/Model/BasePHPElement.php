@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Model;
+namespace BrianHenryIE\SimplePhpParser\Model;
 
 use PhpParser\Node;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\NodeAbstract;
-use voku\SimplePhpParser\Parsers\Helper\ParserContainer;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer;
 
 abstract class BasePHPElement
 {

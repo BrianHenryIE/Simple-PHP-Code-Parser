@@ -31,12 +31,12 @@
     },
     "autoload": {
         "psr-4": {
-            "voku\\": "src/voku/"
+            "BrianHenryIE\\SimplePhpParser\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "voku\\tests\\": "tests/"
+            "BrianHenryIE\\SimplePhpParser\\": "tests"
         }
     }
 }

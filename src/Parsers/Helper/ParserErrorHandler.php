@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Parsers\Helper;
+namespace BrianHenryIE\SimplePhpParser\Parsers\Helper;
 
 use PhpParser\Error;
 use PhpParser\ErrorHandler;
