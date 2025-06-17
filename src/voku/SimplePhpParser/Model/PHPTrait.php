@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace voku\SimplePhpParser\Model;
 
-use phpDocumentor\Reflection\DocBlockFactory;
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\Trait_;
 use ReflectionClass;
+use voku\SimplePhpParser\Parsers\Helper\DocFactoryProvider;
 use voku\SimplePhpParser\Parsers\Helper\Utils;
 
 final class PHPTrait extends BasePHPClass

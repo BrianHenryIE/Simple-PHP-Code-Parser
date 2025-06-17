@@ -6,7 +6,6 @@ namespace voku\SimplePhpParser\Model;
 
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
-use phpDocumentor\Reflection\DocBlockFactory;
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\Function_;
 use ReflectionFunction;
