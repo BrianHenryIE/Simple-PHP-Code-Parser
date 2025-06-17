@@ -270,6 +270,7 @@ class PhpCodeParser
 
             $phpCodes[$cacheKey]['content'] = $pathOrCode;
             $phpCodes[$cacheKey]['fileName'] = null;
+            $phpCodes[$cacheKey]['cacheKey'] = $cacheKey;
         }
 
         $cache = new Cache(null, null, false);
@@ -305,8 +306,9 @@ class PhpCodeParser
                 /** @phpstan-var array{content: string, fileName: string, cacheKey: string} $response */
                 $response = $response;
 
-                $phpCodes[$response['cacheKey']]['content'] = $response['content'];
-                $phpCodes[$response['cacheKey']]['fileName'] = $response['fileName'];
+                $phpCodes[ $cacheKey ]['content']  = $response['content'];
+                $phpCodes[ $cacheKey ]['fileName'] = $response['fileName'];
+                $phpCodes[ $cacheKey ]['cacheKey'] = $response['cacheKey'];
 
                 continue;
             }
@@ -317,10 +319,11 @@ class PhpCodeParser
             assert(is_string($cacheKey));
             assert($path === null || is_string($path));
 
-            $cache->setItem($cacheKey, $response);
-
             $phpCodes[$cacheKey]['content'] = $fileContent;
             $phpCodes[$cacheKey]['fileName'] = $path;
+            $phpCodes[$cacheKey]['cacheKey'] = $cacheKey;
+
+            $cache->setItem($cacheKey, $phpCodes[$cacheKey]);
         }
 
         return $phpCodes;
