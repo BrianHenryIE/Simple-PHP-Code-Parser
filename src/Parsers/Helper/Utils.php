@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace BrianHenryIE\SimplePhpParser\Parsers\Helper;
 
+use BrianHenryIE\SimplePhpParser\Parsers\PhpCodeParser;
 use PhpParser\Node\Expr\UnaryMinus;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
 use ReflectionFunction;
-use voku\SimplePhpParser\Parsers\PhpCodeParser;
 
 class Utils
 {
