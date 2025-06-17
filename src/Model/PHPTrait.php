@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace BrianHenryIE\SimplePhpParser\Model;
 
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\DocFactoryProvider;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\Trait_;
 use ReflectionClass;
-use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
 
-final class PHPTrait extends BasePHPClass
+class PHPTrait extends BasePHPClass
 {
     /**
      * @phpstan-var class-string
@@ -292,7 +293,7 @@ final class PHPTrait extends BasePHPClass
         }
 
         try {
-            $phpDoc = Utils::createDocBlockInstance()->create($docComment);
+            $phpDoc = DocFactoryProvider::getDocFactory()->create($docComment);
 
             $parsedPropertyTags = $phpDoc->getTagsByName('property')
                                + $phpDoc->getTagsByName('property-read')

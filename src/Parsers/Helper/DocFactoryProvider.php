@@ -6,7 +6,7 @@ namespace BrianHenryIE\SimplePhpParser\Parsers\Helper;
 
 use phpDocumentor\Reflection\DocBlockFactory;
 
-final class DocFactoryProvider
+class DocFactoryProvider
 {
     private static ?DocBlockFactory $docFactory = null;
 

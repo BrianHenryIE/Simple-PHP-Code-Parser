@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace BrianHenryIE\SimplePhpParser\Model;
 
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
+use BrianHenryIE\SimplePhpParser\Parsers\PhpCodeParser;
 use PhpParser\Comment\Doc;
 use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Param;
 use ReflectionParameter;
-use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
 
 class PHPParameter extends BasePHPElement
 {
@@ -151,7 +152,7 @@ class PHPParameter extends BasePHPElement
             } else {
                 $this->type = Utils::normalizePhpType($type . '', true);
             }
-            if ($this->type && \class_exists($this->type, true)) {
+            if ($this->type && \class_exists($this->type, PhpCodeParser::$classExistsAutoload)) {
                 $this->type = '\\' . \ltrim($this->type, '\\');
             }
 
@@ -221,7 +222,6 @@ class PHPParameter extends BasePHPElement
 
         try {
             $phpDoc = Utils::createDocBlockInstance()->create($docComment);
-
             $parsedParamTags = $phpDoc->getTagsByName('param');
 
             if (!empty($parsedParamTags)) {

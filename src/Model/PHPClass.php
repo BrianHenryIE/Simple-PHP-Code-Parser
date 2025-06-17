@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace BrianHenryIE\SimplePhpParser\Model;
 
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\DocFactoryProvider;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
+use BrianHenryIE\SimplePhpParser\Parsers\PhpCodeParser;
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\Class_;
 use ReflectionClass;
-use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
 
 class PHPClass extends BasePHPClass
 {
@@ -52,7 +54,7 @@ class PHPClass extends BasePHPClass
 
         $classExists = false;
         try {
-            if (\class_exists($this->name, true)) {
+            if (\class_exists($this->name, PhpCodeParser::$classExistsAutoload)) {
                 $classExists = true;
             }
         } catch (\Exception $e) {
@@ -165,7 +167,7 @@ class PHPClass extends BasePHPClass
                 if (
                     !$this->parserContainer->getClass($this->parentClass)
                     &&
-                    \class_exists($this->parentClass, true)
+                    \class_exists($this->parentClass, PhpCodeParser::$classExistsAutoload)
                 ) {
                     $classExists = true;
                 }
@@ -385,7 +387,7 @@ class PHPClass extends BasePHPClass
         }
 
         try {
-            $phpDoc = Utils::createDocBlockInstance()->create($docComment);
+            $phpDoc = DocFactoryProvider::getDocFactory()->create($docComment);
 
             $parsedPropertyTags = $phpDoc->getTagsByName('property')
                                + $phpDoc->getTagsByName('property-read')

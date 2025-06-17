@@ -4,31 +4,37 @@ declare(strict_types=1);
 
 namespace BrianHenryIE\SimplePhpParser\Parsers;
 
-use FilesystemIterator;
-use PhpParser\Lexer\Emulative;
-use PhpParser\NodeTraverser;
-use PhpParser\NodeVisitor\NameResolver;
-use PhpParser\ParserFactory;
-use React\Filesystem\Node\FileInterface;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use SplFileInfo;
-use voku\cache\Cache;
 use BrianHenryIE\SimplePhpParser\Model\PHPInterface;
 use BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer;
 use BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserErrorHandler;
 use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
 use BrianHenryIE\SimplePhpParser\Parsers\Visitors\ASTVisitor;
 use BrianHenryIE\SimplePhpParser\Parsers\Visitors\ParentConnector;
-use function React\Async\await;
-use function React\Promise\all;
+use FilesystemIterator;
+use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor\NameResolver;
+use PhpParser\ParserFactory;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use SplFileInfo;
+use voku\cache\Cache;
 
-final class PhpCodeParser
+class PhpCodeParser
 {
     /**
      * @internal
      */
     private const CACHE_KEY_HELPER = 'simple-php-code-parser-v4-';
+
+    /**
+     * Autoloading during `class_exists()` is fine when you're parsing code for the existing project, but when
+     * parsing php text for a different project, it can lead to unexpected behavior. E.g. the text contains a class
+     * that _can_ be autoloaded because it shares a name with a class in the current project, but version of the class
+     * is different.
+     *
+     * @see class_exists()
+     */
+    public static bool $classExistsAutoload = true;
 
     /**
      * @param string   $code
@@ -200,20 +206,7 @@ final class PhpCodeParser
         ParserContainer $parserContainer,
         ASTVisitor $visitor
     ) {
-        $parser = (new ParserFactory())->create(
-            ParserFactory::PREFER_PHP7,
-            new Emulative(
-                [
-                    'usedAttributes' => [
-                        'comments',
-                        'startLine',
-                        'endLine',
-                        'startTokenPos',
-                        'endTokenPos',
-                    ],
-                ]
-            )
-        );
+        $parser = (new ParserFactory())->createForNewestSupportedVersion();
 
         $errorHandler = new ParserErrorHandler();
 
@@ -260,8 +253,6 @@ final class PhpCodeParser
         $phpCodes = [];
         /** @var SplFileInfo[] $phpFileIterators */
         $phpFileIterators = [];
-        /** @var \React\Promise\PromiseInterface[] $phpFilePromises */
-        $phpFilePromises = [];
 
         // fallback
         if (\count($fileExtensions) === 0) {
@@ -283,7 +274,6 @@ final class PhpCodeParser
 
         $cache = new Cache(null, null, false);
 
-        $phpFileArray = [];
         foreach ($phpFileIterators as $fileOrCode) {
             $path = $fileOrCode->getRealPath();
             if (!$path) {
@@ -321,43 +311,16 @@ final class PhpCodeParser
                 continue;
             }
 
-            $phpFileArray[$cacheKey] = $path;
-        }
+            $fileContent = file_get_contents($path);
 
-        $phpFileArrayChunks = \array_chunk($phpFileArray, Utils::getCpuCores(), true);
-        foreach ($phpFileArrayChunks as $phpFileArrayChunk) {
-            $filesystem = \React\Filesystem\Factory::create();
+            assert(is_string($fileContent));
+            assert(is_string($cacheKey));
+            assert($path === null || is_string($path));
 
-            foreach ($phpFileArrayChunk as $cacheKey => $path) {
-                $phpFilePromises[] = $filesystem->detect($path)->then(
-                    function (FileInterface $file) use ($path, $cacheKey) {
-                        return [
-                            'content'  => $file->getContents()->then(static function (string $contents) {
-                                return $contents;
-                            }),
-                            'fileName' => $path,
-                            'cacheKey' => $cacheKey,
-                        ];
-                    },
-                    function ($e) {
-                        throw $e;
-                    }
-                );
-            }
+            $cache->setItem($cacheKey, $response);
 
-            $phpFilePromiseResponses = await(all($phpFilePromises));
-            foreach ($phpFilePromiseResponses as $response) {
-                $response['content'] = await($response['content']);
-
-                assert(is_string($response['content']));
-                assert(is_string($response['cacheKey']));
-                assert($response['fileName'] === null || is_string($response['fileName']));
-
-                $cache->setItem($response['cacheKey'], $response);
-
-                $phpCodes[$response['cacheKey']]['content'] = $response['content'];
-                $phpCodes[$response['cacheKey']]['fileName'] = $response['fileName'];
-            }
+            $phpCodes[$cacheKey]['content'] = $fileContent;
+            $phpCodes[$cacheKey]['fileName'] = $path;
         }
 
         return $phpCodes;
@@ -387,7 +350,7 @@ final class PhpCodeParser
             if (
                 !isset($classes[$class->parentClass])
                 &&
-                \class_exists($class->parentClass, true)
+                \class_exists($class->parentClass, PhpCodeParser::$classExistsAutoload)
             ) {
                 $reflectionClassTmp = Utils::createClassReflectionInstance($class->parentClass);
                 $classTmp = (new \BrianHenryIE\SimplePhpParser\Model\PHPClass($parserContainer))->readObjectFromReflection($reflectionClassTmp);

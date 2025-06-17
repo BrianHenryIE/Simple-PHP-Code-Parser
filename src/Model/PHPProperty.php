@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace BrianHenryIE\SimplePhpParser\Model;
 
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\DocFactoryProvider;
+use BrianHenryIE\SimplePhpParser\Parsers\PhpCodeParser;
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\Property;
 use ReflectionProperty;
-use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
 
 class PHPProperty extends BasePHPElement
 {
@@ -131,7 +133,7 @@ class PHPProperty extends BasePHPElement
 
         if ($this->is_static) {
             try {
-                if (\class_exists($property->getDeclaringClass()->getName(), true)) {
+                if (\class_exists($property->getDeclaringClass()->getName(), PhpCodeParser::$classExistsAutoload)) {
                     $this->defaultValue = $property->getValue();
                 }
             } catch (\Exception $e) {
@@ -165,7 +167,7 @@ class PHPProperty extends BasePHPElement
                     $this->type = Utils::normalizePhpType($type . '', true);
                 }
                 try {
-                    if ($this->type && \class_exists($this->type, true)) {
+                    if ($this->type && \class_exists($this->type, PhpCodeParser::$classExistsAutoload)) {
                         $this->type = '\\' . \ltrim($this->type, '\\');
                     }
                 } catch (\Exception $e) {
@@ -229,7 +231,7 @@ class PHPProperty extends BasePHPElement
         }
 
         try {
-            $phpDoc = Utils::createDocBlockInstance()->create($docComment);
+            $phpDoc = DocFactoryProvider::getDocFactory()->create($docComment);
 
             $parsedParamTags = $phpDoc->getTagsByName('var');
 

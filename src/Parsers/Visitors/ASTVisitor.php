@@ -21,7 +21,7 @@ use BrianHenryIE\SimplePhpParser\Model\PHPTrait;
 use BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer;
 use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
 
-final class ASTVisitor extends NodeVisitorAbstract
+class ASTVisitor extends NodeVisitorAbstract
 {
     /**
      * @var string|null

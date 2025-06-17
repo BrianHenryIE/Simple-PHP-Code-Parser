@@ -21,14 +21,12 @@
     ],
     "require": {
         "php": ">=7.4",
-        "react/async": "~3.0.0 || ~4.1.0",
-        "react/filesystem": "^0.2@dev",
         "phpdocumentor/type-resolver": "~1.7.2",
         "phpdocumentor/reflection-docblock": "~5.3",
         "phpdocumentor/reflection-common": "~2.2",
         "phpstan/phpdoc-parser": "~1.23",
         "voku/simple-cache": "~4.1",
-        "nikic/php-parser": "~4.16"
+        "nikic/php-parser": "^4.18 || ^5"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.0 || ~7.0 || ~9.0"
@@ -42,5 +40,16 @@
         "psr-4": {
             "BrianHenryIE\\SimplePhpParser\\": "tests"
         }
+    },
+    "scripts": {
+        "test-coverage": [
+            "Composer\\Config::disableProcessTimeout",
+            "if [ \"$XDEBUG_MODE\" != \"coverage\" ]; then echo \"Run with 'XDEBUG_MODE=coverage composer test-coverage'\"; exit 1; fi;",
+            "phpunit --coverage-text --coverage-clover .phpunit.result/unitclover.xml --coverage-php .phpunit.result/unitphp.cov --coverage-html .phpunit.result/html -d memory_limit=-1 --order-by=random",
+            "# Run 'open ./.phpunit.result/html/index.html' to view report."
+        ]
+    },
+    "scripts-descriptions": {
+        "test-coverage": "Run PHPUnit tests with coverage. Use 'XDEBUG_MODE=coverage composer test-coverage' to run, 'open ./.phpunit.result/html/index.html' to view."
     }
 }
