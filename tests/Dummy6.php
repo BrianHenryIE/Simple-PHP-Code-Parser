@@ -7,7 +7,7 @@ namespace BrianHenryIE\SimplePhpParser;
 /**
  * @internal
  */
-abstract class Dummy6 implements DummyInterface
+abstract class Dummy6 implements \BrianHenryIE\SimplePhpParser\DummyInterface
 {
     /**
      * @var null|int

@@ -7,7 +7,7 @@ namespace BrianHenryIE\SimplePhpParser;
 /**
  * @internal
  */
-final class Dummy2 implements DummyInterface
+final class Dummy2 implements \BrianHenryIE\SimplePhpParser\DummyInterface
 {
     /**
      * @param \phpDocumentor\Reflection\DocBlock\Tags\BaseTag $parsedParamTag

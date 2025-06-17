@@ -11,7 +11,7 @@ use BrianHenryIE\SimplePhpParser\Dummy6 as DummyFoo;
  */
 final class Dummy9 extends DummyFoo
 {
-    use DummyTrait;
+    use \BrianHenryIE\SimplePhpParser\DummyTrait;
 
     /**
      * {@inheritdoc}
