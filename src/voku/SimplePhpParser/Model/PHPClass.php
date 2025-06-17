@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace voku\SimplePhpParser\Model;
 
-use phpDocumentor\Reflection\DocBlockFactory;
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\Class_;
 use ReflectionClass;
+use voku\SimplePhpParser\Parsers\Helper\DocFactoryProvider;
 use voku\SimplePhpParser\Parsers\Helper\Utils;
 use voku\SimplePhpParser\Parsers\PhpCodeParser;
 
@@ -387,7 +387,7 @@ class PHPClass extends BasePHPClass
         }
 
         try {
-            $phpDoc = DocBlockFactory::createInstance()->create($docComment);
+            $phpDoc = DocFactoryProvider::getDocFactory()->create($docComment);
 
             $parsedPropertyTags = $phpDoc->getTagsByName('property')
                                + $phpDoc->getTagsByName('property-read')

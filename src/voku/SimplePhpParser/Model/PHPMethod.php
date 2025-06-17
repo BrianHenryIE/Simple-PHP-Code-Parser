@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace voku\SimplePhpParser\Model;
 
-use phpDocumentor\Reflection\DocBlockFactory;
 use voku\SimplePhpParser\Parsers\Helper\DocFactoryProvider;
 use voku\SimplePhpParser\Parsers\Helper\Utils;
 
@@ -45,7 +44,7 @@ class PHPMethod extends PHPFunction
         $docComment = $node->getDocComment();
         if ($docComment) {
             try {
-                $phpDoc = DocBlockFactory::createInstance()->create($docComment->getText());
+                $phpDoc = DocFactoryProvider::getDocFactory()->create($docComment->getText());
                 $this->summary = $phpDoc->getSummary();
                 $this->description = (string) $phpDoc->getDescription();
             } catch (\Exception $e) {

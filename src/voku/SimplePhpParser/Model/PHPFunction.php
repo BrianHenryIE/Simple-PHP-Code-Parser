@@ -6,7 +6,6 @@ namespace voku\SimplePhpParser\Model;
 
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
-use phpDocumentor\Reflection\DocBlockFactory;
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\Function_;
 use ReflectionFunction;
@@ -77,7 +76,7 @@ class PHPFunction extends BasePHPElement
         $docComment = $node->getDocComment();
         if ($docComment) {
             try {
-                $phpDoc = DocBlockFactory::createInstance()->create($docComment->getText());
+                $phpDoc = DocFactoryProvider::getDocFactory()->create($docComment->getText());
                 $this->summary = $phpDoc->getSummary();
                 $this->description = (string) $phpDoc->getDescription();
             } catch (\Exception $e) {
@@ -230,7 +229,7 @@ class PHPFunction extends BasePHPElement
         }
 
         try {
-            $phpDoc = DocBlockFactory::createInstance()->create($docComment);
+            $phpDoc = DocFactoryProvider::getDocFactory()->create($docComment);
 
             $parsedReturnTag = $phpDoc->getTagsByName('return');
 
