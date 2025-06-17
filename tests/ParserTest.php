@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BrianHenryIE\SimplePhpParser;
 
 use BrianHenryIE\SimplePhpParser\Parsers\PhpCodeParser;
+use voku\cache\Cache;
 
 /**
  * @internal
@@ -234,6 +235,9 @@ final class ParserTest extends \PHPUnit\Framework\TestCase
 
     public function testSimpleOneTrait(): void
     {
+        $cache = new Cache(null, null, false);
+        $cache->removeAll();
+
         $phpCode = PhpCodeParser::getPhpFiles(__DIR__ . '/DummyTrait.php');
         $phpTraits = $phpCode->getTraits();
 
