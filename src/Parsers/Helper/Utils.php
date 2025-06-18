@@ -159,7 +159,7 @@ class Utils
                 return $className;
             }
 
-            if (\class_exists($className, PhpCodeParser::$classExistsAutoload)) {
+            if (PhpCodeParser::$classExistsAutoload && \class_exists($className)) {
                 return \constant($className . '::' . $node->name->name);
             }
         }

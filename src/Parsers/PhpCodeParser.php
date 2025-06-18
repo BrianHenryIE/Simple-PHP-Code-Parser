@@ -353,7 +353,7 @@ class PhpCodeParser
             if (
                 !isset($classes[$class->parentClass])
                 &&
-                \class_exists($class->parentClass, PhpCodeParser::$classExistsAutoload)
+                PhpCodeParser::$classExistsAutoload && \class_exists($class->parentClass)
             ) {
                 $reflectionClassTmp = Utils::createClassReflectionInstance($class->parentClass);
                 $classTmp = (new \BrianHenryIE\SimplePhpParser\Model\PHPClass($parserContainer))->readObjectFromReflection($reflectionClassTmp);

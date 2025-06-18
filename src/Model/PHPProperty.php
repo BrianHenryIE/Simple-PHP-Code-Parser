@@ -133,7 +133,7 @@ class PHPProperty extends BasePHPElement
 
         if ($this->is_static) {
             try {
-                if (\class_exists($property->getDeclaringClass()->getName(), PhpCodeParser::$classExistsAutoload)) {
+                if (PhpCodeParser::$classExistsAutoload && \class_exists($property->getDeclaringClass()->getName())) {
                     $this->defaultValue = $property->getValue();
                 }
             } catch (\Exception $e) {
@@ -167,7 +167,7 @@ class PHPProperty extends BasePHPElement
                     $this->type = Utils::normalizePhpType($type . '', true);
                 }
                 try {
-                    if ($this->type && \class_exists($this->type, PhpCodeParser::$classExistsAutoload)) {
+                    if ($this->type && PhpCodeParser::$classExistsAutoload && \class_exists($this->type)) {
                         $this->type = '\\' . \ltrim($this->type, '\\');
                     }
                 } catch (\Exception $e) {
