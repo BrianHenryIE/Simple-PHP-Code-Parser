@@ -152,7 +152,7 @@ class PHPParameter extends BasePHPElement
             } else {
                 $this->type = Utils::normalizePhpType($type . '', true);
             }
-            if ($this->type && \class_exists($this->type, PhpCodeParser::$classExistsAutoload)) {
+            if ($this->type && PhpCodeParser::$classExistsAutoload && \class_exists($this->type)) {
                 $this->type = '\\' . \ltrim($this->type, '\\');
             }
 

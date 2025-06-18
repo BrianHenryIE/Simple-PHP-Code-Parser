@@ -54,7 +54,7 @@ class PHPClass extends BasePHPClass
 
         $classExists = false;
         try {
-            if (\class_exists($this->name, PhpCodeParser::$classExistsAutoload)) {
+            if (PhpCodeParser::$classExistsAutoload && \class_exists($this->name)) {
                 $classExists = true;
             }
         } catch (\Exception $e) {
@@ -167,7 +167,7 @@ class PHPClass extends BasePHPClass
                 if (
                     !$this->parserContainer->getClass($this->parentClass)
                     &&
-                    \class_exists($this->parentClass, PhpCodeParser::$classExistsAutoload)
+                    PhpCodeParser::$classExistsAutoload && \class_exists($this->parentClass)
                 ) {
                     $classExists = true;
                 }
