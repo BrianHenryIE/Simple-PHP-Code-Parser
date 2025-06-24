@@ -6,6 +6,7 @@ namespace BrianHenryIE\SimplePhpParser\Model;
 
 use BrianHenryIE\SimplePhpParser\Parsers\Helper\DocFactoryProvider;
 use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
+use BrianHenryIE\SimplePhpParser\Parsers\PhpCodeParser;
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\Trait_;
 use ReflectionClass;
@@ -29,7 +30,7 @@ class PHPTrait extends BasePHPClass
 
         $this->name = static::getFQN($node);
 
-        if (\trait_exists($this->name, true)) {
+        if (PhpCodeParser::$classExistsAutoload && \trait_exists($this->name, true)) {
             $reflectionClass = Utils::createClassReflectionInstance($this->name);
             $this->readObjectFromReflection($reflectionClass);
         }

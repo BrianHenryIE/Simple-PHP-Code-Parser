@@ -8,6 +8,7 @@ use BrianHenryIE\SimplePhpParser\Model\PHPInterface;
 use BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer;
 use BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserErrorHandler;
 use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
+use BrianHenryIE\SimplePhpParser\Parsers\PhpCodeParser;
 use BrianHenryIE\SimplePhpParser\Parsers\Visitors\ASTVisitor;
 use BrianHenryIE\SimplePhpParser\Parsers\Visitors\ParentConnector;
 use FilesystemIterator;
@@ -395,7 +396,7 @@ class PhpCodeParser
                 if (
                     !isset($interfaces[$interfaceStr])
                     &&
-                    \interface_exists($interfaceStr, true)
+                    PhpCodeParser::$classExistsAutoload && \interface_exists($interfaceStr, true)
                 ) {
                     $reflectionInterfaceTmp = Utils::createClassReflectionInstance($interfaceStr);
                     $interfaceTmp = (new PHPInterface($parserContainer))->readObjectFromReflection($reflectionInterfaceTmp);
