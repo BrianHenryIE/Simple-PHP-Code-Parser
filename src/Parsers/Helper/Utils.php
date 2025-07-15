@@ -113,9 +113,12 @@ class Utils
                     &&
                     $node->value->name
                 ) {
+                    if(is_string($node->value->name)) {
+                        return $node->value->name;
+                    }
                     $value = method_exists($node->value->name,'getParts')
                         ? implode('\\', $node->value->name->getParts())
-                        : $node->value->name;
+                        : $node->value->name->name;
                     return $value === 'null' ? null : $value;
                 }
             }
