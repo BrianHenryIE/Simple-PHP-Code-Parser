@@ -113,13 +113,15 @@ class Utils
                     &&
                     $node->value->name
                 ) {
-                    if(is_string($node->value->name)) {
-                        return $node->value->name;
+                    $nodeName = $node->value->name;
+                    if (is_object($nodeName)) {
+                        if (method_exists($nodeName, 'toString')) {
+                            $nodeName = $nodeName->toString();
+                        } elseif (property_exists($nodeName, 'name')) {
+                            $nodeName = $nodeName->name;
+                        }
                     }
-                    $value = method_exists($node->value->name,'getParts')
-                        ? implode('\\', $node->value->name->getParts())
-                        : $node->value->name->name;
-                    return $value === 'null' ? null : $value;
+                    return $nodeName === 'null' ? null : $nodeName;
                 }
             }
 
