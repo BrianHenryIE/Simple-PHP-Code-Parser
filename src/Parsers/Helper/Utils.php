@@ -113,10 +113,16 @@ class Utils
                     &&
                     $node->value->name
                 ) {
-                    $value = method_exists($node->value->name,'getParts')
-                        ? implode('\\', $node->value->name->getParts())
-                        : $node->value->name->name;
-                    return $value === 'null' ? null : $value;
+                    if (method_exists($node->value->name, 'toString')) {
+                        $nameStr = $node->value->name->toString();
+                    } elseif ($node->value->name instanceof \PhpParser\Node\Name) {
+                        $nameStr = $node->value->name->__toString();
+                    } elseif ($node->value->name instanceof \PhpParser\Node\Identifier) {
+                        $nameStr = $node->value->name->name;
+                    } else {
+                        $nameStr = (string)$node->value->name;
+                    }
+                    return $nameStr === 'null' ? null : $nameStr;
                 }
             }
 
