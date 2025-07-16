@@ -115,10 +115,6 @@ class Utils
                 ) {
                     if (method_exists($node->value->name, 'toString')) {
                         $nameStr = $node->value->name->toString();
-                    } elseif ($node->value->name instanceof \PhpParser\Node\Name) {
-                        $nameStr = $node->value->name->__toString();
-                    } elseif ($node->value->name instanceof \PhpParser\Node\Identifier) {
-                        $nameStr = $node->value->name->name;
                     } else {
                         $nameStr = (string)$node->value->name;
                     }
