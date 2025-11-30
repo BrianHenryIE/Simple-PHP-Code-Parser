@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace voku\tests;
+namespace BrianHenryIE\SimplePhpParser;
 
 /**
  * @internal
  */
-final class Dummy4 extends Dummy
+final class Dummy4 extends \BrianHenryIE\SimplePhpParser\Dummy
 {
-    use DummyTrait;
+    use \BrianHenryIE\SimplePhpParser\DummyTrait;
 
     /**
      * @var null|float|int

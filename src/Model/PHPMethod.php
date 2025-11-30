@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Model;
+namespace BrianHenryIE\SimplePhpParser\Model;
 
-use voku\SimplePhpParser\Parsers\Helper\DocFactoryProvider;
-use voku\SimplePhpParser\Parsers\Helper\Utils;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\DocFactoryProvider;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
 
 class PHPMethod extends PHPFunction
 {
@@ -44,7 +44,7 @@ class PHPMethod extends PHPFunction
         $docComment = $node->getDocComment();
         if ($docComment) {
             try {
-                $phpDoc = Utils::createDocBlockInstance()->create($docComment->getText());
+                $phpDoc = DocFactoryProvider::getDocFactory()->create($docComment->getText());
                 $this->summary = $phpDoc->getSummary();
                 $this->description = (string) $phpDoc->getDescription();
             } catch (\Exception $e) {

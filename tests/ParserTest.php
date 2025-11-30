@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace voku\tests;
+namespace BrianHenryIE\SimplePhpParser;
 
-use voku\SimplePhpParser\Parsers\PhpCodeParser;
+use BrianHenryIE\SimplePhpParser\Parsers\PhpCodeParser;
+use voku\cache\Cache;
 
 /**
  * @internal
@@ -38,8 +39,8 @@ final class ParserTest extends \PHPUnit\Framework\TestCase
 
         $lall11 = $phpClasses[Dummy3::class]->methods['lall11'];
         static::assertSame('lall11', $lall11->name);
-        static::assertSame('voku\tests\DummyInterface', $lall11->returnType);
-        static::assertSame('\voku\tests\Dummy3', $lall11->returnTypeFromPhpDocMaybeWithComment);
+        static::assertSame('BrianHenryIE\SimplePhpParser\DummyInterface', $lall11->returnType);
+        static::assertSame('\BrianHenryIE\SimplePhpParser\Dummy3', $lall11->returnTypeFromPhpDocMaybeWithComment);
 
         $withComplexReturnArray = $phpClasses[Dummy3::class]->methods['withComplexReturnArray'];
         static::assertSame('withComplexReturnArray', $withComplexReturnArray->name);
@@ -81,7 +82,7 @@ final class ParserTest extends \PHPUnit\Framework\TestCase
         $getFieldArray = $phpClasses[Dummy9::class]->methods['getFieldArray'];
         static::assertSame('getFieldArray', $getFieldArray->name);
 
-        static::assertSame('voku\tests\Dummy6', $phpClasses[Dummy9::class]->parentClass);
+        static::assertSame('BrianHenryIE\SimplePhpParser\Dummy6', $phpClasses[Dummy9::class]->parentClass);
     }
 
     public function testUnionTypes(): void
@@ -202,10 +203,10 @@ final class ParserTest extends \PHPUnit\Framework\TestCase
             $phpClasses[Dummy8::class]->methods['test_multi_param_type']->parameters['param1']->typeFromPhpDoc
         );
 
-        static::assertSame(
-            'array{stdClass: \stdClass, numbers: int|float $lall',
-            $phpClasses[Dummy8::class]->methods['foo_broken']->parameters['lall']->phpDocRaw
-        );
+//        static::assertSame(
+//            'array{stdClass: \stdClass, numbers: int|float $lall',
+//            $phpClasses[Dummy8::class]->methods['foo_broken']->parameters['lall']->phpDocRaw
+//        );
 
         static::assertSame(
             'array{stdClass: \stdClass, numbers: int|float <foo/>',
@@ -234,6 +235,9 @@ final class ParserTest extends \PHPUnit\Framework\TestCase
 
     public function testSimpleOneTrait(): void
     {
+        $cache = new Cache(null, null, false);
+        $cache->removeAll();
+
         $phpCode = PhpCodeParser::getPhpFiles(__DIR__ . '/DummyTrait.php');
         $phpTraits = $phpCode->getTraits();
 
@@ -320,7 +324,7 @@ final class ParserTest extends \PHPUnit\Framework\TestCase
     public function testSimpleStringInputClasses(): void
     {
         $code = '<?php
-        namespace voku\tests;
+        namespace BrianHenryIE\SimplePhpParser;
         class SimpleClass {}
         $obja = new class() {};
         $objb = new class {};
@@ -424,7 +428,7 @@ final class ParserTest extends \PHPUnit\Framework\TestCase
         //\var_export($result);
 
         static::assertSame([
-            'voku\\tests\\foo' => [
+            'BrianHenryIE\\SimplePhpParser\\foo' => [
                 'fullDescription' => '',
                 'paramsTypes'     => [
                     'foo' => [

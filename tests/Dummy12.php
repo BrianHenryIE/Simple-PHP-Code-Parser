@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace voku\tests;
+namespace BrianHenryIE\SimplePhpParser;
 
 /**
  * @internal
  */
-final class Dummy12 implements DummyInterface
+final class Dummy12 implements \BrianHenryIE\SimplePhpParser\DummyInterface
 {
     /**
      * {@inheritdoc}

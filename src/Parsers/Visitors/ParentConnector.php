@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Parsers\Visitors;
+namespace BrianHenryIE\SimplePhpParser\Parsers\Visitors;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
@@ -10,7 +10,7 @@ use PhpParser\NodeVisitorAbstract;
 /**
  * The visitor is required to provide "parent" attribute to nodes
  */
-final class ParentConnector extends NodeVisitorAbstract
+class ParentConnector extends NodeVisitorAbstract
 {
     /**
      * @var Node[]

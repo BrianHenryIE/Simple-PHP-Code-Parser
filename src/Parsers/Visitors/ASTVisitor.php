@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Parsers\Visitors;
+namespace BrianHenryIE\SimplePhpParser\Parsers\Visitors;
 
 use PhpParser\Node;
 use PhpParser\Node\Const_;
@@ -12,16 +12,16 @@ use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Interface_;
 use PhpParser\Node\Stmt\Trait_;
 use PhpParser\NodeVisitorAbstract;
-use voku\SimplePhpParser\Model\PHPClass;
-use voku\SimplePhpParser\Model\PHPConst;
-use voku\SimplePhpParser\Model\PHPDefineConstant;
-use voku\SimplePhpParser\Model\PHPFunction;
-use voku\SimplePhpParser\Model\PHPInterface;
-use voku\SimplePhpParser\Model\PHPTrait;
-use voku\SimplePhpParser\Parsers\Helper\ParserContainer;
-use voku\SimplePhpParser\Parsers\Helper\Utils;
+use BrianHenryIE\SimplePhpParser\Model\PHPClass;
+use BrianHenryIE\SimplePhpParser\Model\PHPConst;
+use BrianHenryIE\SimplePhpParser\Model\PHPDefineConstant;
+use BrianHenryIE\SimplePhpParser\Model\PHPFunction;
+use BrianHenryIE\SimplePhpParser\Model\PHPInterface;
+use BrianHenryIE\SimplePhpParser\Model\PHPTrait;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
 
-final class ASTVisitor extends NodeVisitorAbstract
+class ASTVisitor extends NodeVisitorAbstract
 {
     /**
      * @var string|null
@@ -29,12 +29,12 @@ final class ASTVisitor extends NodeVisitorAbstract
     public ?string $fileName;
 
     /**
-     * @var \voku\SimplePhpParser\Parsers\Helper\ParserContainer
+     * @var \BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer
      */
     private ParserContainer $parserContainer;
 
     /**
-     * @param \voku\SimplePhpParser\Parsers\Helper\ParserContainer $parserContainer
+     * @param \BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer $parserContainer
      */
     public function __construct(ParserContainer $parserContainer)
     {
@@ -140,7 +140,7 @@ final class ASTVisitor extends NodeVisitorAbstract
     }
 
     /**
-     * @param \voku\SimplePhpParser\Model\PHPInterface $interface
+     * @param \BrianHenryIE\SimplePhpParser\Model\PHPInterface $interface
      *
      * @return string[]
      *
@@ -170,7 +170,7 @@ final class ASTVisitor extends NodeVisitorAbstract
     }
 
     /**
-     * @param \voku\SimplePhpParser\Model\PHPClass $class
+     * @param \BrianHenryIE\SimplePhpParser\Model\PHPClass $class
      *
      * @return array
      */

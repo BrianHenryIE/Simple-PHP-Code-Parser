@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace voku\tests;
+namespace BrianHenryIE\SimplePhpParser;
 
 /**
  * @internal
  */
-final readonly class Dummy13 implements \voku\tests\DummyInterface
+final readonly class Dummy13 implements \BrianHenryIE\SimplePhpParser\DummyInterface
 {
     /**
      * @var callable(int): string

@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Model;
+namespace BrianHenryIE\SimplePhpParser\Model;
 
+use BrianHenryIE\SimplePhpParser\Parsers\PhpCodeParser;
 use PhpParser\Node\Stmt\Interface_;
 use ReflectionClass;
-use voku\SimplePhpParser\Parsers\Helper\Utils;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
 
 class PHPInterface extends BasePHPClass
 {
@@ -36,7 +37,7 @@ class PHPInterface extends BasePHPClass
 
         $interfaceExists = false;
         try {
-            if (\interface_exists($this->name, true)) {
+            if (PhpCodeParser::$classExistsAutoload && \interface_exists($this->name, true)) {
                 $interfaceExists = true;
             }
         } catch (\Exception $e) {
@@ -119,7 +120,7 @@ class PHPInterface extends BasePHPClass
                 if (
                     !$this->parserContainer->getInterface($parentInterface)
                     &&
-                    \interface_exists($parentInterface, true)
+                    PhpCodeParser::$classExistsAutoload && \interface_exists($parentInterface, true)
                 ) {
                     $interfaceExists = true;
                 }

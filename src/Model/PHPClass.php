@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Model;
+namespace BrianHenryIE\SimplePhpParser\Model;
 
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\DocFactoryProvider;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
+use BrianHenryIE\SimplePhpParser\Parsers\PhpCodeParser;
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\Class_;
 use ReflectionClass;
-use voku\SimplePhpParser\Parsers\Helper\Utils;
 
 class PHPClass extends BasePHPClass
 {
@@ -52,7 +54,7 @@ class PHPClass extends BasePHPClass
 
         $classExists = false;
         try {
-            if (\class_exists($this->name, true)) {
+            if (PhpCodeParser::$classExistsAutoload && \class_exists($this->name)) {
                 $classExists = true;
             }
         } catch (\Exception $e) {
@@ -165,7 +167,7 @@ class PHPClass extends BasePHPClass
                 if (
                     !$this->parserContainer->getClass($this->parentClass)
                     &&
-                    \class_exists($this->parentClass, true)
+                    PhpCodeParser::$classExistsAutoload && \class_exists($this->parentClass)
                 ) {
                     $classExists = true;
                 }
@@ -385,7 +387,7 @@ class PHPClass extends BasePHPClass
         }
 
         try {
-            $phpDoc = Utils::createDocBlockInstance()->create($docComment);
+            $phpDoc = DocFactoryProvider::getDocFactory()->create($docComment);
 
             $parsedPropertyTags = $phpDoc->getTagsByName('property')
                                + $phpDoc->getTagsByName('property-read')

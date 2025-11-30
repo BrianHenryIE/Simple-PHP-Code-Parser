@@ -2,46 +2,46 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Parsers\Helper;
+namespace BrianHenryIE\SimplePhpParser\Parsers\Helper;
 
-use voku\SimplePhpParser\Model\PHPClass;
-use voku\SimplePhpParser\Model\PHPConst;
-use voku\SimplePhpParser\Model\PHPFunction;
-use voku\SimplePhpParser\Model\PHPInterface;
-use voku\SimplePhpParser\Model\PHPTrait;
+use BrianHenryIE\SimplePhpParser\Model\PHPClass;
+use BrianHenryIE\SimplePhpParser\Model\PHPConst;
+use BrianHenryIE\SimplePhpParser\Model\PHPFunction;
+use BrianHenryIE\SimplePhpParser\Model\PHPInterface;
+use BrianHenryIE\SimplePhpParser\Model\PHPTrait;
 
 class ParserContainer
 {
     /**
-     * @var \voku\SimplePhpParser\Model\PHPConst[]
+     * @var \BrianHenryIE\SimplePhpParser\Model\PHPConst[]
      *
      * @phpstan-var array<string, PHPConst>
      */
     private array $constants = [];
 
     /**
-     * @var \voku\SimplePhpParser\Model\PHPFunction[]
+     * @var \BrianHenryIE\SimplePhpParser\Model\PHPFunction[]
      *
      * @phpstan-var array<string, PHPFunction>
      */
     private array $functions = [];
 
     /**
-     * @var \voku\SimplePhpParser\Model\PHPClass[]
+     * @var \BrianHenryIE\SimplePhpParser\Model\PHPClass[]
      *
      * @phpstan-var array<string, PHPClass>
      */
     private array $classes = [];
 
     /**
-     * @var \voku\SimplePhpParser\Model\PHPTrait[]
+     * @var \BrianHenryIE\SimplePhpParser\Model\PHPTrait[]
      *
      * @phpstan-var array<string, PHPTrait>
      */
     private array $traits = [];
 
     /**
-     * @var \voku\SimplePhpParser\Model\PHPInterface[]
+     * @var \BrianHenryIE\SimplePhpParser\Model\PHPInterface[]
      *
      * @phpstan-var array<string, PHPInterface>
      */
@@ -53,7 +53,7 @@ class ParserContainer
     private array $parse_errors = [];
 
     /**
-     * @return \voku\SimplePhpParser\Model\PHPConst[]
+     * @return \BrianHenryIE\SimplePhpParser\Model\PHPConst[]
      */
     public function getConstants(): array
     {
@@ -74,7 +74,7 @@ class ParserContainer
     }
 
     /**
-     * @return \voku\SimplePhpParser\Model\PHPFunction[]
+     * @return \BrianHenryIE\SimplePhpParser\Model\PHPFunction[]
      */
     public function getFunctions(): array
     {
@@ -186,7 +186,7 @@ class ParserContainer
     /**
      * @param string $name
      *
-     * @return \voku\SimplePhpParser\Model\PHPClass|null
+     * @return \BrianHenryIE\SimplePhpParser\Model\PHPClass|null
      */
     public function getClass(string $name): ?PHPClass
     {
@@ -194,7 +194,7 @@ class ParserContainer
     }
 
     /**
-     * @return \voku\SimplePhpParser\Model\PHPClass[]
+     * @return \BrianHenryIE\SimplePhpParser\Model\PHPClass[]
      */
     public function getClasses(): array
     {
@@ -202,7 +202,7 @@ class ParserContainer
     }
 
     /**
-     * @return \voku\SimplePhpParser\Model\PHPClass[]
+     * @return \BrianHenryIE\SimplePhpParser\Model\PHPClass[]
      */
     public function &getClassesByReference(): array
     {
@@ -210,7 +210,7 @@ class ParserContainer
     }
 
     /**
-     * @param array<string, \voku\SimplePhpParser\Model\PHPInterface> $interfaces
+     * @param array<string, \BrianHenryIE\SimplePhpParser\Model\PHPInterface> $interfaces
      */
     public function setInterfaces($interfaces): void
     {
@@ -220,7 +220,7 @@ class ParserContainer
     }
 
     /**
-     * @param array<string, \voku\SimplePhpParser\Model\PHPConst> $constants
+     * @param array<string, \BrianHenryIE\SimplePhpParser\Model\PHPConst> $constants
      */
     public function setConstants($constants): void
     {
@@ -230,7 +230,7 @@ class ParserContainer
     }
 
     /**
-     * @param array<string, \voku\SimplePhpParser\Model\PHPFunction> $functions
+     * @param array<string, \BrianHenryIE\SimplePhpParser\Model\PHPFunction> $functions
      */
     public function setFunctions($functions): void
     {
@@ -240,7 +240,7 @@ class ParserContainer
     }
 
     /**
-     * @param array<string, \voku\SimplePhpParser\Model\PHPClass> $classes
+     * @param array<string, \BrianHenryIE\SimplePhpParser\Model\PHPClass> $classes
      */
     public function setClasses($classes): void
     {
@@ -250,7 +250,7 @@ class ParserContainer
     }
 
     /**
-     * @param array<string, \voku\SimplePhpParser\Model\PHPTrait> $traits
+     * @param array<string, \BrianHenryIE\SimplePhpParser\Model\PHPTrait> $traits
      */
     public function setTraits($traits): void
     {
@@ -279,7 +279,7 @@ class ParserContainer
     /**
      * @param string $name
      *
-     * @return \voku\SimplePhpParser\Model\PHPTrait|null
+     * @return \BrianHenryIE\SimplePhpParser\Model\PHPTrait|null
      */
     public function getTrait(string $name): ?PHPTrait
     {
@@ -287,7 +287,7 @@ class ParserContainer
     }
 
     /**
-     * @return \voku\SimplePhpParser\Model\PHPTrait[]
+     * @return \BrianHenryIE\SimplePhpParser\Model\PHPTrait[]
      */
     public function getTraits(): array
     {
@@ -302,7 +302,7 @@ class ParserContainer
     /**
      * @param string $name
      *
-     * @return \voku\SimplePhpParser\Model\PHPInterface|null
+     * @return \BrianHenryIE\SimplePhpParser\Model\PHPInterface|null
      */
     public function getInterface(string $name): ?PHPInterface
     {
@@ -310,7 +310,7 @@ class ParserContainer
     }
 
     /**
-     * @return \voku\SimplePhpParser\Model\PHPInterface[]
+     * @return \BrianHenryIE\SimplePhpParser\Model\PHPInterface[]
      */
     public function getInterfaces(): array
     {

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace voku\tests;
+namespace BrianHenryIE\SimplePhpParser;
 
 /**
  * @internal
  */
-final class Dummy8 extends Dummy6
+final class Dummy8 extends \BrianHenryIE\SimplePhpParser\Dummy6
 {
     /**
      * @var class-string<Foooooooo>
      */
     public $foooooooo = Foooooooo::class;
 
-    use DummyTrait;
+    use \BrianHenryIE\SimplePhpParser\DummyTrait;
 
     /**
      * {@inheritdoc}

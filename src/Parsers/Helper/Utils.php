@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Parsers\Helper;
+namespace BrianHenryIE\SimplePhpParser\Parsers\Helper;
 
+use BrianHenryIE\SimplePhpParser\Parsers\PhpCodeParser;
 use PhpParser\Node\Expr\UnaryMinus;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
 use ReflectionFunction;
 
-final class Utils
+class Utils
 {
     public const GET_PHP_PARSER_VALUE_FROM_NODE_HELPER = '!!!_SIMPLE_PHP_CODE_PARSER_HELPER_!!!';
 
@@ -65,7 +66,7 @@ final class Utils
     /**
      * @param \PhpParser\Node\Arg|\PhpParser\Node\Const_|\PhpParser\Node\Expr $node
      * @param string|null                                                     $classStr
-     * @param \voku\SimplePhpParser\Parsers\Helper\ParserContainer|null       $parserContainer
+     * @param \BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer|null       $parserContainer
      *
      * @phpstan-param class-string|null                                         $classStr
      *
@@ -112,7 +113,12 @@ final class Utils
                     &&
                     $node->value->name
                 ) {
-                    $value = implode('\\', $node->value->name->getParts()) ?: $node->value->name->name;
+                    if(is_string($node->value->name)) {
+                        return $node->value->name;
+                    }
+                    $value = method_exists($node->value->name,'getParts')
+                        ? implode('\\', $node->value->name->getParts())
+                        : $node->value->name->name;
                     return $value === 'null' ? null : $value;
                 }
             }
@@ -156,7 +162,7 @@ final class Utils
                 return $className;
             }
 
-            if (\class_exists($className, true)) {
+            if (PhpCodeParser::$classExistsAutoload && \class_exists($className)) {
                 return \constant($className . '::' . $node->name->name);
             }
         }
@@ -468,7 +474,7 @@ final class Utils
         }
 
         /** @noinspection PhpUsageOfSilenceOperatorInspection */
-        $ret = @\shell_exec('nproc');
+        $ret = @\shell_exec('nproc 2>&1');
         if (\is_string($ret)) {
             $ret = \trim($ret);
             /** @noinspection PhpAssignmentInConditionInspection */
@@ -487,6 +493,23 @@ final class Utils
             $count = \substr_count($cpuinfo, 'processor');
             if ($count > 0) {
                 $return = (int)round($count / 2);
+                if ($return > 1) {
+                    return $return;
+                }
+
+                return 1;
+            }
+        }
+
+        /**
+         * macOS (FreeBSD)
+         */
+        $ret = @\shell_exec('sysctl -n hw.ncpu');
+        if (\is_string($ret)) {
+            $ret = \trim($ret);
+            /** @noinspection PhpAssignmentInConditionInspection */
+            if ($ret && ($tmp = \filter_var($ret, \FILTER_VALIDATE_INT)) !== false) {
+                $return = (int)round($tmp / 2);
                 if ($return > 1) {
                     return $return;
                 }

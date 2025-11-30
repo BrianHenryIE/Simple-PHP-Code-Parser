@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace voku\tests;
+namespace BrianHenryIE\SimplePhpParser;
 
 /**
  * @internal
  */
-final class Dummy7 extends Dummy6
+final class Dummy7 extends \BrianHenryIE\SimplePhpParser\Dummy6
 {
     /**
      * {@inheritdoc}

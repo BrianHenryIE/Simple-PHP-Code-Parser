@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Parsers\Helper;
+namespace BrianHenryIE\SimplePhpParser\Parsers\Helper;
 
 use phpDocumentor\Reflection\DocBlockFactory;
 
-final class DocFactoryProvider
+class DocFactoryProvider
 {
     private static ?DocBlockFactory $docFactory = null;
 

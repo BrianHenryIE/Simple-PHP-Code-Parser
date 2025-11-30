@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Model;
+namespace BrianHenryIE\SimplePhpParser\Model;
 
 use PhpParser\Node;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\NodeAbstract;
-use voku\SimplePhpParser\Parsers\Helper\ParserContainer;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer;
 
 abstract class BasePHPElement
 {
@@ -97,6 +97,13 @@ abstract class BasePHPElement
 
     protected function prepareNode(Node $node): void
     {
-        $this->line = $node->getLine();
+        $this->line = method_exists($node, 'getStartLine')
+            ? $node->getStartLine()
+            /**
+             * Deprecated in PHP-Parser v5
+             *
+             * @see https://github.com/nikic/PHP-Parser/blob/master/UPGRADE-5.0.md#miscellaneous-changes
+             */
+            : $node->getLine();
     }
 }

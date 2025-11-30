@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace voku\SimplePhpParser\Model;
+namespace BrianHenryIE\SimplePhpParser\Model;
 
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\DocFactoryProvider;
+use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
+use BrianHenryIE\SimplePhpParser\Parsers\PhpCodeParser;
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\Trait_;
 use ReflectionClass;
-use voku\SimplePhpParser\Parsers\Helper\Utils;
 
-final class PHPTrait extends BasePHPClass
+class PHPTrait extends BasePHPClass
 {
     /**
      * @phpstan-var class-string
@@ -28,7 +30,7 @@ final class PHPTrait extends BasePHPClass
 
         $this->name = static::getFQN($node);
 
-        if (\trait_exists($this->name, true)) {
+        if (PhpCodeParser::$classExistsAutoload && \trait_exists($this->name, true)) {
             $reflectionClass = Utils::createClassReflectionInstance($this->name);
             $this->readObjectFromReflection($reflectionClass);
         }
@@ -292,7 +294,7 @@ final class PHPTrait extends BasePHPClass
         }
 
         try {
-            $phpDoc = Utils::createDocBlockInstance()->create($docComment);
+            $phpDoc = DocFactoryProvider::getDocFactory()->create($docComment);
 
             $parsedPropertyTags = $phpDoc->getTagsByName('property')
                                + $phpDoc->getTagsByName('property-read')
