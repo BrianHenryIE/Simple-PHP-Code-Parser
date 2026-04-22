@@ -8,7 +8,6 @@ use BrianHenryIE\SimplePhpParser\Model\PHPInterface;
 use BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserContainer;
 use BrianHenryIE\SimplePhpParser\Parsers\Helper\ParserErrorHandler;
 use BrianHenryIE\SimplePhpParser\Parsers\Helper\Utils;
-use BrianHenryIE\SimplePhpParser\Parsers\PhpCodeParser;
 use BrianHenryIE\SimplePhpParser\Parsers\Visitors\ASTVisitor;
 use BrianHenryIE\SimplePhpParser\Parsers\Visitors\ParentConnector;
 use FilesystemIterator;
