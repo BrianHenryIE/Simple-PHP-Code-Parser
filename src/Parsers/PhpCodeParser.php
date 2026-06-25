@@ -465,7 +465,7 @@ class PhpCodeParser
                 unset($value); /* @phpstan-ignore-line ? */
             }
 
-            if (!isset($classes[$class->parentClass])) {
+            if (is_null($class->parentClass) || !isset($classes[$class->parentClass])) {
                 continue;
             }
 
