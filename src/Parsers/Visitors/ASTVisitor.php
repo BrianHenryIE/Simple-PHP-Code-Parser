@@ -8,6 +8,7 @@ use PhpParser\Node;
 use PhpParser\Node\Const_;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\Enum_;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Interface_;
 use PhpParser\Node\Stmt\Trait_;
@@ -15,6 +16,7 @@ use PhpParser\NodeVisitorAbstract;
 use BrianHenryIE\SimplePhpParser\Model\PHPClass;
 use BrianHenryIE\SimplePhpParser\Model\PHPConst;
 use BrianHenryIE\SimplePhpParser\Model\PHPDefineConstant;
+use BrianHenryIE\SimplePhpParser\Model\PHPEnum;
 use BrianHenryIE\SimplePhpParser\Model\PHPFunction;
 use BrianHenryIE\SimplePhpParser\Model\PHPInterface;
 use BrianHenryIE\SimplePhpParser\Model\PHPTrait;
@@ -74,6 +76,11 @@ class ASTVisitor extends NodeVisitorAbstract
                     $interface = $this->parserContainer->getInterface($constant->parentName);
                     if ($interface) {
                         $interface->constants[$constant->name] = $constant;
+                    } else {
+                        $enum = $this->parserContainer->getEnum($constant->parentName);
+                        if ($enum) {
+                            $enum->constants[$constant->name] = $constant;
+                        }
                     }
                 }
 
@@ -125,6 +132,17 @@ class ASTVisitor extends NodeVisitorAbstract
                     $class->file = $this->fileName;
                 }
                 $this->parserContainer->addClass($class);
+
+                break;
+
+            case $node instanceof Enum_:
+
+                $enum = new PHPEnum($this->parserContainer);
+                $enum = $enum->readObjectFromPhpNode($node);
+                if (!$enum->file) {
+                    $enum->file = $this->fileName;
+                }
+                $this->parserContainer->addEnum($enum);
 
                 break;
 

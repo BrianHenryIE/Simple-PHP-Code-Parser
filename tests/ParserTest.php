@@ -1155,6 +1155,125 @@ parsedParamTag:119 | Unexpected token "$parsedParamTag", expected type at offset
         self::assertSame('int', $phpFunctionsInfo['fsockopen']['paramsTypes']['errno']['typeFromPhpDoc']);
     }
 
+    public function testEnumParsing(): void
+    {
+        $classExistsAutoloadBefore = PhpCodeParser::$classExistsAutoload;
+        PhpCodeParser::$classExistsAutoload = false;
+
+        try {
+            $phpCode = PhpCodeParser::getFromString(
+                (string) \file_get_contents(__DIR__ . '/DummyEnum.php')
+            );
+            $phpCodePure = PhpCodeParser::getFromString(
+                (string) \file_get_contents(__DIR__ . '/DummyEnumPure.php')
+            );
+        } finally {
+            PhpCodeParser::$classExistsAutoload = $classExistsAutoloadBefore;
+        }
+
+        $phpEnums = $phpCode->getEnums();
+
+        static::assertCount(1, $phpEnums);
+
+        $backedEnum = $phpEnums[DummyEnum::class];
+        static::assertSame(DummyEnum::class, $backedEnum->name);
+        static::assertSame('string', $backedEnum->backingType);
+        static::assertTrue($backedEnum->is_final);
+        static::assertContains(DummyEnumInterface::class, $backedEnum->interfaces);
+
+        static::assertCount(2, $backedEnum->cases);
+        static::assertSame('Hearts', $backedEnum->cases['Hearts']->name);
+        static::assertSame('hearts', $backedEnum->cases['Hearts']->value);
+        static::assertSame('spades', $backedEnum->cases['Spades']->value);
+
+        static::assertSame('label', $backedEnum->methods['label']->name);
+
+        static::assertArrayHasKey('REGEX', $backedEnum->constants);
+        static::assertSame('/^(hearts|spades)$/', $backedEnum->constants['REGEX']->value);
+
+        $pureEnum = $phpCodePure->getEnums()[DummyEnumPure::class];
+        static::assertNull($pureEnum->backingType);
+        static::assertCount(2, $pureEnum->cases);
+        static::assertNull($pureEnum->cases['Up']->value);
+        static::assertNull($pureEnum->cases['Down']->value);
+    }
+
+    public function testEnumIntBackingParsing(): void
+    {
+        $classExistsAutoloadBefore = PhpCodeParser::$classExistsAutoload;
+        PhpCodeParser::$classExistsAutoload = false;
+
+        $code = '<?php
+        namespace BrianHenryIE\SimplePhpParser;
+        enum DummyEnumInt: int
+        {
+            case One = 1;
+            case Two = 2;
+        }';
+
+        try {
+            $phpCode = PhpCodeParser::getFromString($code);
+        } finally {
+            PhpCodeParser::$classExistsAutoload = $classExistsAutoloadBefore;
+        }
+
+        $phpEnums = $phpCode->getEnums();
+
+        static::assertSame('int', $phpEnums['BrianHenryIE\SimplePhpParser\DummyEnumInt']->backingType);
+        static::assertSame(1, $phpEnums['BrianHenryIE\SimplePhpParser\DummyEnumInt']->cases['One']->value);
+        static::assertSame(2, $phpEnums['BrianHenryIE\SimplePhpParser\DummyEnumInt']->cases['Two']->value);
+    }
+
+    public function testEnumIsNotAClassAndItsMembersDoNotLeak(): void
+    {
+        $classExistsAutoloadBefore = PhpCodeParser::$classExistsAutoload;
+        PhpCodeParser::$classExistsAutoload = false;
+
+        try {
+            $phpCode = PhpCodeParser::getFromString(
+                (string) \file_get_contents(__DIR__ . '/DummyEnum.php')
+            );
+        } finally {
+            PhpCodeParser::$classExistsAutoload = $classExistsAutoloadBefore;
+        }
+
+        static::assertArrayNotHasKey(DummyEnum::class, $phpCode->getClasses());
+        static::assertArrayNotHasKey(DummyEnum::class, $phpCode->getInterfaces());
+        static::assertArrayNotHasKey(DummyEnum::class, $phpCode->getTraits());
+
+        // The enum's `const REGEX` must attach to the enum, not leak as a global constant.
+        foreach ($phpCode->getConstants() as $constantName => $constant) {
+            static::assertStringNotContainsString('REGEX', $constantName);
+        }
+
+        // Enum cases are not constants.
+        static::assertArrayNotHasKey('Hearts', $phpCode->getConstants());
+        $enum = $phpCode->getEnum(DummyEnum::class);
+        static::assertNotNull($enum);
+        static::assertArrayNotHasKey('Hearts', $enum->constants);
+    }
+
+    public function testEnumReflectionAugmentation(): void
+    {
+        if (\PHP_VERSION_ID < 80100) {
+            static::markTestSkipped('only for PHP >= 8.1');
+        }
+
+        $phpCode = PhpCodeParser::getPhpFiles(__DIR__ . '/DummyEnum.php');
+
+        $phpEnums = $phpCode->getEnums();
+
+        $backedEnum = $phpEnums[DummyEnum::class];
+        static::assertSame('string', $backedEnum->backingType);
+        static::assertContains(DummyEnumInterface::class, $backedEnum->interfaces);
+        // Reflection adds the implicit BackedEnum/UnitEnum interfaces.
+        static::assertContains('BackedEnum', $backedEnum->interfaces);
+        static::assertContains('UnitEnum', $backedEnum->interfaces);
+
+        static::assertSame('hearts', $backedEnum->cases['Hearts']->value);
+        static::assertSame('label', $backedEnum->methods['label']->name);
+    }
+
     /**
      * @param array $result
      *
