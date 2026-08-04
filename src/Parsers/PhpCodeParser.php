@@ -125,6 +125,7 @@ class PhpCodeParser
                 $parserContainer->setTraits($response->getTraits());
                 $parserContainer->setClasses($response->getClasses());
                 $parserContainer->setInterfaces($response->getInterfaces());
+                $parserContainer->setEnums($response->getEnums());
                 $parserContainer->setConstants($response->getConstants());
                 $parserContainer->setFunctions($response->getFunctions());
             } elseif ($response instanceof ParserErrorHandler) {

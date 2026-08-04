@@ -6,6 +6,7 @@ namespace BrianHenryIE\SimplePhpParser\Parsers\Helper;
 
 use BrianHenryIE\SimplePhpParser\Model\PHPClass;
 use BrianHenryIE\SimplePhpParser\Model\PHPConst;
+use BrianHenryIE\SimplePhpParser\Model\PHPEnum;
 use BrianHenryIE\SimplePhpParser\Model\PHPFunction;
 use BrianHenryIE\SimplePhpParser\Model\PHPInterface;
 use BrianHenryIE\SimplePhpParser\Model\PHPTrait;
@@ -46,6 +47,13 @@ class ParserContainer
      * @phpstan-var array<string, PHPInterface>
      */
     private array $interfaces = [];
+
+    /**
+     * @var \BrianHenryIE\SimplePhpParser\Model\PHPEnum[]
+     *
+     * @phpstan-var array<string, PHPEnum>
+     */
+    private array $enums = [];
 
     /**
      * @var string[]
@@ -320,5 +328,38 @@ class ParserContainer
     public function addInterface(PHPInterface $interface): void
     {
         $this->interfaces[$interface->name ?: \md5(\serialize($interface))] = $interface;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \BrianHenryIE\SimplePhpParser\Model\PHPEnum|null
+     */
+    public function getEnum(string $name): ?PHPEnum
+    {
+        return $this->enums[$name] ?? null;
+    }
+
+    /**
+     * @return \BrianHenryIE\SimplePhpParser\Model\PHPEnum[]
+     */
+    public function getEnums(): array
+    {
+        return $this->enums;
+    }
+
+    public function addEnum(PHPEnum $enum): void
+    {
+        $this->enums[$enum->name ?: \md5(\serialize($enum))] = $enum;
+    }
+
+    /**
+     * @param array<string, \BrianHenryIE\SimplePhpParser\Model\PHPEnum> $enums
+     */
+    public function setEnums($enums): void
+    {
+        foreach ($enums as $enumName => $enum) {
+            $this->enums[$enumName] = $enum;
+        }
     }
 }
