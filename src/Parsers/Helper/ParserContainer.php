@@ -61,11 +61,34 @@ class ParserContainer
     private array $parse_errors = [];
 
     /**
+     * The AST most recently parsed by {@see \BrianHenryIE\SimplePhpParser\Parsers\PhpCodeParser::process()}.
+     *
+     * @var \PhpParser\Node[]|null
+     */
+    private ?array $ast = null;
+
+    /**
      * @return \BrianHenryIE\SimplePhpParser\Model\PHPConst[]
      */
     public function getConstants(): array
     {
         return $this->constants;
+    }
+
+    /**
+     * @param \PhpParser\Node[] $ast
+     */
+    public function setAst(array $ast): void
+    {
+        $this->ast = $ast;
+    }
+
+    /**
+     * @return \PhpParser\Node[]|null
+     */
+    public function getAst(): ?array
+    {
+        return $this->ast;
     }
 
     /**

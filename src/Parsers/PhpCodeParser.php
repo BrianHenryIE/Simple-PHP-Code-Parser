@@ -233,6 +233,8 @@ class PhpCodeParser
         $traverser->addVisitor($visitor);
         $traverser->traverse($parsedCode);
 
+        $parserContainer->setAst($parsedCode);
+
         return $parserContainer;
     }
 
